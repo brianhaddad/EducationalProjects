@@ -4,8 +4,9 @@ async function goGoGadgetFileReader(id) {
     //console.log(fileTexts);
     let fileText = fileTexts[0]; //For now we'll just worry about the first one, can't select more than one in the file picker anyway.
     //Need to grab out the things in square brackets.
-    const expression = /\[([^]]+)\]/g;
-    let matches = fileText.match(expression);
+    //Learned basics here:
+    //https://stackoverflow.com/questions/12059284/get-text-between-two-rounded-brackets
+    let matches = fileText.match(/\[(.*?)\]/g);
     console.log(matches);
 }
 

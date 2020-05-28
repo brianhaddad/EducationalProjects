@@ -25,11 +25,19 @@ Some students may struggle with saving files with a particular extension, should
 ## Quick Overview
 Talk the students through the existing code briefly. Introduce concept of "black box" code where we know how to use it, but don't really care how it works. It takes information in and spits information out predictably. Show off the structure of the data passed into main(), talk about commented-out code, comments, and console logging, and show how to open the project and look at console output and explore the data in the console.
 
+Make sure to hit the following points:
+* fileReader.js (black box for now)
+* main.js (where we'll write our code)
+* sample_story.txt (the download for the full story will be provided later)
+* style.css (where we'll change how things are rendered on the screen)
+* index.html (the "physical" structure of the page we're working with)
+
 ## Write the Code
 There are relatively few moving parts here. First the students should look at the data that we're starting with and figure out what might need to be done in order to get to the end goal. Define the goal.
 
 ### FOR loop
 The inputs are stored in an indexed *array*. The most basic way to iterate through an indexed arrray is to use a FOR loop. Indexing nearly always begins with zero in programming (though there are baffling exceptions).
+
 Go over setting up the loop and understanding how it "thinks" then have them think about how that will be useful for our program. Alternatively, before introducing the loop, talk about the indexed array and see if they can figure out how to describe what we can do with that information to accomplish our goal.
 
 ### Getting User Input
@@ -40,10 +48,12 @@ String manipulation is powerful but it can quickly get messy. We're not going to
 
 ### Updating the DOM
 Talk a bit about the DOM. Look back at the HTML and talk about how javascript needs a way to communicate with the web page, so it uses its own model to understand how the HTML is structured. We can directly manipulate the DOM from within javascript, and the browser will display those updates to us.
+
 While we're looking at the HTML, does "Read File" accurately capture what we're doing? How about "Play Game"?
 
 ### Show Off "Bugs"
 What happens when we don't select a file before hitting the "Play Game" button?
+
 What happens when we select a file that isn't a proper template file?
 
 # Intermediate Agenda

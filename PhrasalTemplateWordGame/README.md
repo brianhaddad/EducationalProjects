@@ -15,6 +15,11 @@ Objectives:
 # Simple Teaching Agenda
 Try to touch on the following points of interest as you present the code and work the students through completing the project.
 
+## Introduction
+Does anyone already have any experience with programming? Let's hear about it.
+
+Touch on objectives (above). This lesson will be excruciatingly simple, but there will be some challenges at the end, and I'll be happy to follow up with anyone who would like to learn more or tackle the challenges. My email address and a link to the GitHub page will be provided at the end, as well as an overview of the GitHub project.
+
 ## Download and Setup
 Ideally, the final story should be a surprise for the student. It's more fun that way. You can choose to provide the story in the initial download or give it to them at the end and use a dummy file for development.
 
@@ -36,18 +41,20 @@ Make sure to hit the following points:
 There are relatively few moving parts here. First the students should look at the data that we're starting with and figure out what might need to be done in order to get to the end goal. Define the goal.
 
 ### FOR loop
-The inputs are stored in an indexed *array*. The most basic way to iterate through an indexed arrray is to use a FOR loop. Indexing nearly always begins with zero in programming (though there are baffling exceptions).
+The inputs are stored in an indexed **array**. The most basic way to iterate through an indexed arrray is to use a FOR loop. Indexing nearly always begins with zero in programming (though there are baffling exceptions).
 
 Go over setting up the loop and understanding how it "thinks" then have them think about how that will be useful for our program. Alternatively, before introducing the loop, talk about the indexed array and see if they can figure out how to describe what we can do with that information to accomplish our goal.
 
 ### Getting User Input
-An antiquated but simple way to get user input is the javascript *prompt()*. We can store the value a user enters into a variable of our own.
+An antiquated but simple way to get user input is the javascript **prompt()**. We can store the value a user enters into a variable of our own.
 
 ### Altering the String
-String manipulation is powerful but it can quickly get messy. We're not going to cover any best practices here, we're just going to get the job done. Talk about string concatenation for the prompt, then talk about *replace()* for inserting the user data into the original template string.
+String manipulation is powerful but it can quickly get messy. We're not going to cover any best practices here, we're just going to get the job done. Talk about string concatenation for the prompt, then talk about **replace()** for inserting the user data into the original template string.
+
+Touch on the way **replace()** works, replacing only the first found instance when not using a regular expression. Show the regular expression (regex) in the "black box" code and explain that it took two days to get that regex working properly. Regex is powerful, but it can be a pain in the rear to get it working in any given context. I'm frankly not even sure if that regex will always work the way I want it to, it just worked fine for what I needed here for now so I went with it.
 
 ### Updating the DOM
-Talk a bit about the DOM. Look back at the HTML and talk about how javascript needs a way to communicate with the web page, so it uses its own model to understand how the HTML is structured. We can directly manipulate the DOM from within javascript, and the browser will display those updates to us.
+Talk a bit about the DOM (Document Object Model). Look back at the HTML and talk about how javascript needs a way to communicate with the web page, so it uses its own "object" model to understand how the HTML is structured. We can directly manipulate the DOM from within javascript, and the browser will display those updates to us.
 
 While we're looking at the HTML, does "Read File" accurately capture what we're doing? How about "Play Game"?
 
@@ -55,6 +62,11 @@ While we're looking at the HTML, does "Read File" accurately capture what we're 
 What happens when we don't select a file before hitting the "Play Game" button?
 
 What happens when we select a file that isn't a proper template file?
+
+## Conclusion
+* Show off completed Intermediate project and highlight the parts of the Intermediate Agenda below.
+* Show the GitHub project in an incognito window and teach how to navigate it.
+* Send out link to GitHub project as well as personal email address.
 
 # Intermediate Agenda
 

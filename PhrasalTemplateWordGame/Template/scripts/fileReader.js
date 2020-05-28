@@ -1,13 +1,15 @@
 async function goGoGadgetFileReader(id) {
     const files = document.getElementById(id).files;
-    let fileTexts = await readFileArray(files);
-    //console.log(fileTexts);
-    let fileText = fileTexts[0]; //For now we'll just worry about the first one, can't select more than one in the file picker anyway.
-    //Need to grab out the things in square brackets.
-    //Learned basics here:
-    //https://stackoverflow.com/questions/12059284/get-text-between-two-rounded-brackets
-    let matches = fileText.match(/\[(.*?)\]/g);
-    console.log(matches);
+    const fileTexts = await readFileArray(files);
+    //For now we'll just worry about the first one, can't select more than one in the file picker anyway.
+    main(new PhrasalTemplate(fileTexts[0]));
+}
+
+//Learned basics of extracting text between brackets here:
+//https://stackoverflow.com/questions/12059284/get-text-between-two-rounded-brackets
+function PhrasalTemplate(originalString){
+    this.string = originalString;
+    this.inputs = originalString.match(/\[(.*?)\]/g);
 }
 
 //This is based off things I learned at the following links:

@@ -21,3 +21,6 @@ Ideally, the final story should be a surprise for the student. It's more fun tha
 This project can be completed with Notepad or some other basic text editor, but some students may wish to work in VS Code or Notepad++. The students can be encouraged to look into advanced text editors for programming and make a selection before the class. They can install the software ahead of time and learn to use it to create, edit, and save a basic text file.
 
 Some students may struggle with saving files with a particular extension, should the need arise. The simple version of this project does not require creating any new files or documents, though in order to complete some of the more advanced features they may need help setting their operating system to display extensions, or at least learning to use their text editor to override the default filetype.
+
+## Quick Overview
+Talk the students through the existing code briefly. Introduce concept of "black box" code where we know how to use it, but don't really care how it works. It takes information in and spits information out predictably. Show off the structure of the data passed into main(), talk about commented-out code, comments, and console logging, and show how to open the project and look at console output and explore the data in the console.

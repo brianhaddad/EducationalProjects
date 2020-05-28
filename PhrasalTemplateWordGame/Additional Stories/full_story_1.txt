@@ -1,4 +1,4 @@
-This is a story about [boy name]. He is very [adjective] boy. He absolutely loves to go [gerund (-ing)] with his [noun] in the [place].
-One day he met [girl name]. She was [adjective] and he instantly [past tense intransitive verb] for her. In fact, he wanted to [present tense transitive verb] her a [noun (direct object)].
-In the end, he [past tense intrasitive verb]. He was just too [adjective] and she was too [adjective]. In fact, she didn't like his [noun].
-The end.
+    This is a story about [boy name]. He is very [adjective] boy. He absolutely loves to go [gerund (-ing)] with his [noun] in the [place].
+    One day he met [girl name]. She was [adjective] and he instantly [past tense intransitive verb] for her. In fact, he wanted to [present tense transitive verb] her a [noun (direct object)].
+    In the end, he [past tense intrasitive verb]. He was just too [adjective] and she was too [adjective]. In fact, she didn't like his [noun].
+    The end.

@@ -3,6 +3,10 @@ body
     font-family: "Courier New", Courier, monospace;
 }
 
+pre {
+    white-space: pre-wrap;
+}
+
 .main
 {
     font-family: "Arial", Arial, sans-serif;

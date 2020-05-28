@@ -40,6 +40,10 @@ Make sure to hit the following points:
 ## Write the Code
 There are relatively few moving parts here. First the students should look at the data that we're starting with and figure out what might need to be done in order to get to the end goal. Define the goal.
 
+Touch briefly on the concept of containers or elements or objects that can contain something else. An HTML tag is a container (usually) with attributes. In code the curly braces denote code snippets or data that are contained within something. In fact, a container in javascript is called an object, and literally everything in javascript is an object. Talk about nesting and be sure to point out examples of nesting in the code.
+
+Also talk about white space and how (with the exception of the pre tags) white space never means anything to to the computer in the HTML, CSS, or script files. It's only to help us visually understand what is on the screen.
+
 ### FOR loop
 The inputs are stored in an indexed **array**. The most basic way to iterate through an indexed arrray is to use a FOR loop. Indexing nearly always begins with zero in programming (though there are baffling exceptions).
 
@@ -67,6 +71,7 @@ What happens when we select a file that isn't a proper template file?
 * Show off completed Intermediate project and highlight the parts of the Intermediate Agenda below.
 * Show the GitHub project in an incognito window and teach how to navigate it.
 * Send out link to GitHub project as well as personal email address.
+* Give them the final story templates to play with.
 
 # Intermediate Agenda
 
@@ -77,11 +82,11 @@ What happens when we select a file that isn't a proper template file?
 * No file data validation (file must parse properly into a template).
 
 ## Aesthetic Upgrades
-* Hide the output div before updating its inner HTML.
-* Show the output div from javascript once it's been updated.
-* Once again, typing out the code to access the main div has been repeated, let's refactor to make our lives easier.
-* Style the input group by addig them to their own div and adding custom styling.
-* Center the output div and the input group div.
+* Hide the output element before updating its inner HTML.
+* Show the output element from javascript once it's been updated.
+* Once again, typing out the code to access the main element has been repeated, let's refactor to make our lives easier.
+* Style the input group by addig them to their own div group and adding custom styling.
+* Center the output element and the input div group.
 
 # Advanced Ideas
 The advanced version of this project could probably use a lot of refactoring, but for now let's stick with advanced features we could add:
@@ -89,3 +94,4 @@ The advanced version of this project could probably use a lot of refactoring, bu
 * Better user experience. The built-in _prompt()_ and _alert()_ functions that we're using to interact with our user are antiquated, ugly, and considered bad practice. The proper way to do this would be to dynamically generate an HTML form to collect the data. This would be a lot of work, but it would be easier than you might think.
 * Better styling. I am not a web designer. My CSS is ugly. Maybe some more customized input elements, better page styling, prettier text...
 * More advanced template options. Could the templates automatically substitute in "a" or "an" properly? Could a validator be written or perhaps found that can determine if the user input is valid (not just present). For example, if prompting for a singular noun, are there any quick, easy checks we can make to determine the likelihood that the input is actually a singular noun?
+* Better output. For now we're using a pre tag, but the text could be easily manipulated into HTML for cleaner, better formatting. We could put it in paragraph tags, style our paragraphs, and generally present it better. With our `replace()` method, we could even put the inserted words in span tags to give them separate formatting as well so they stand out.

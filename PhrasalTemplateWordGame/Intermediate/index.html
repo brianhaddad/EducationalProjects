@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Phrasal Template Word Game</title>
+        <link rel="stylesheet" href="style/style.css">
+    </head>
+    <body>
+        <div class="controls">
+            <label for="inputText">Select a text file containing the phrasal template:</label><br />
+            <input type="file" name="inputText" id="inputText" accept=".txt" />
+            <input type="button" name="goGoGadgetFileReader" id="goGoGadgetFileReader" value="Play Game" onclick="javascript:goGoGadgetFileReader('inputText');" />
+        </div>
+        <div id="main" class="main"></div>
+        <script src="scripts/fileReader.js"></script>
+        <script src="scripts/main.js"></script>
+    </body>
+</html>

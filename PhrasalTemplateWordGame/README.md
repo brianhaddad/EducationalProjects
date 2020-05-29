@@ -87,6 +87,7 @@ What happens when we select a file that isn't a proper template file?
 * Once again, typing out the code to access the main element has been repeated, let's refactor to make our lives easier.
 * Style the input group by addig them to their own div group and adding custom styling.
 * Center the output element and the input div group.
+* Add a way to know how many total items are needed and which one you're being asked about.
 
 # Advanced Ideas
 The advanced version of this project could probably use a lot of refactoring, but for now let's stick with advanced features we could add:

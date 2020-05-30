@@ -6,6 +6,7 @@ async function goGoGadgetFileReader(id) {
     }
     const fileTexts = await readFileArray(files);
     //For now we'll just worry about the first one, can't select more than one in the file picker anyway.
+    console.log(fileTexts);
     main(new PhrasalTemplate(fileTexts[0]));
 }
 

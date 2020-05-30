@@ -1,4 +1,6 @@
-function main(templateData){
+function main(templateDatas){
+    var templateData = templateDatas[0]; //Temporary
+    //TODO: handle all files in a loop.
     if (!templateData.inputs || templateData.inputs.length < 1){
         alert('Error: This template appears to be invalid. Please select a valid template file for the game.');
         return null;

@@ -1,5 +1,5 @@
-function main(templateDatas) {
-    var container = document.getElementById('main');
+function main(templateDatas, id) {
+    var container = document.getElementById(id);
     var linebreak = '[linebreak]';
     var highlightUserWords = true;
 
@@ -44,6 +44,12 @@ function main(templateDatas) {
         container.appendChild(story);
     }
     container.style.display = 'block';
+}
+
+function clearOutput(id){
+    var container = document.getElementById(id);
+    container.style.display = 'none';
+    container.innerHTML = '';
 }
 
 function createElement(type, attributes, innerHTML) {

@@ -1,6 +1,7 @@
 function main(templateDatas) {
     var container = document.getElementById('main');
     var linebreak = '[linebreak]';
+    var highlightUserWords = true;
 
     for (var i = 0; i < templateDatas.length; i++) {
         var templateData = templateDatas[i];
@@ -21,12 +22,17 @@ function main(templateDatas) {
                 answer = prompt('Story ' + (i + 1) + '/' + templateDatas.length + ': Blank ' + (j + 1) + '/' + templateData.inputs.length + '\nPlease input a ' + element)
             }
             while (!answer || answer.length == 0);
+            if (highlightUserWords){
+                answer = '<span class="user_answer">' + answer + '</span>';
+            }
             templateData.string = templateData.string.replace(element, answer);
         }
 
         var story = createElement('div', { 'class': 'story' });
-        var title = createElement('h2', {}, 'Story ' + (i + 1));
+        var title = createElement('h1', {}, 'Story ' + (i + 1));
+        var subtitle = createElement('h3', {}, 'From: ' + templateData.name);
         story.appendChild(title);
+        story.appendChild(subtitle);
 
         templateData.string = templateData.string.replace(/(\r\n|\n|\r)/gm, linebreak);
         var lines = templateData.string.split(linebreak);
@@ -34,7 +40,7 @@ function main(templateDatas) {
             var p = createElement('p', {}, lines[j]);
             story.appendChild(p);
         }
-        
+
         container.appendChild(story);
     }
     container.style.display = 'block';

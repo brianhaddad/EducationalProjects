@@ -20,6 +20,9 @@ function main(templateDatas){
         templateData.string = templateData.string.replace(element, answer);
     }
     var container = document.getElementById('main');
+    //We're going back to HTML formatting, but we're going to clean up our text.
+    templateData.string = '<p>' + templateData.string + '</p>';
+    templateData.string = templateData.string.replace(/(\r\n|\n|\r)/gm, '</p><p>');
     container.innerHTML = templateData.string;
     container.style.display = 'block';
 }

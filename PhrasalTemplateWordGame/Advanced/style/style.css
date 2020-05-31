@@ -10,22 +10,26 @@ body
     border: 1px solid blue;
 }
 
-.story h2
+.story h1, .story h3
 {
     margin: 5px;
 }
 
 .story p
 {
+    font-family: "Arial", Arial, sans-serif;
+    font-size: 2em;
     text-indent: 50px;
     margin: 10px;
 }
 
+.user_answer
+{
+    text-decoration: underline;
+}
+
 .main
 {
-    font-family: "Arial", Arial, sans-serif;
-    font-size: 2em;
-    font-weight: bold;
     padding: 5px;
     margin: 10px;
     border: 1px solid black;

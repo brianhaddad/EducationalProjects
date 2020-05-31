@@ -3,8 +3,22 @@ body
     font-family: "Courier New", Courier, monospace;
 }
 
-pre {
-    white-space: pre-wrap;
+.story
+{
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid blue;
+}
+
+.story h2
+{
+    margin: 5px;
+}
+
+.story p
+{
+    text-indent: 50px;
+    margin: 10px;
 }
 
 .main

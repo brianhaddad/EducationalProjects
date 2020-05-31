@@ -20,9 +20,27 @@ function main(templateDatas){
         templateData.string = templateData.string.replace(element, answer);
     }
     var container = document.getElementById('main');
-    //We're going back to HTML formatting, but we're going to clean up our text.
-    templateData.string = '<p>' + templateData.string + '</p>';
-    templateData.string = templateData.string.replace(/(\r\n|\n|\r)/gm, '</p><p>');
-    container.innerHTML = templateData.string;
+    var linebreak = '[linebreak]';
+    templateData.string = templateData.string.replace(/(\r\n|\n|\r)/gm, linebreak);
+    var lines = templateData.string.split(linebreak);
+    var story = createElement('div', {'class':'story'});
+    var title = createElement('h2', {}, 'Story');
+    story.appendChild(title);
+    for (var i=0; i<lines.length; i++){
+        var p = createElement('p', {}, lines[i]);
+        story.appendChild(p);
+    }
+    container.appendChild(story);
     container.style.display = 'block';
 }
+
+function createElement(type, attributes, innerHTML) {
+    var element = document.createElement(type);
+    for (var a in attributes) {
+        element.setAttribute(a, attributes[a]);
+    }
+    if (innerHTML) {
+        element.innerHTML = innerHTML;
+    }
+    return element;
+};

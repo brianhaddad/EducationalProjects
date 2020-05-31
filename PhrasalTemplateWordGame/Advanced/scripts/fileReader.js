@@ -11,9 +11,10 @@ async function goGoGadgetFileReader(id) {
 
 //Learned basics of extracting text between brackets here:
 //https://stackoverflow.com/questions/12059284/get-text-between-two-rounded-brackets
-function PhrasalTemplate(originalString){
-    this.string = originalString;
-    this.inputs = originalString.match(/\[(.*?)\]/g);
+function PhrasalTemplate(fileData){
+    this.name = fileData['filename'];
+    this.string = fileData['content'];
+    this.inputs = fileData['content'].match(/\[(.*?)\]/g);
 }
 
 //This is based off things I learned at the following links:
@@ -37,7 +38,7 @@ async function readFileArray(fileArray) {
     for (var i=0; i<fileArray.length; i++) {
         try {
             let file = await readFileAsText(fileArray[i]);
-            files.push(file);
+            files.push({'filename': fileArray[i].name, 'content': file});
         } catch (e) {
             console.warn(e.message)
         }

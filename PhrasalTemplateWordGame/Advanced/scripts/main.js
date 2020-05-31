@@ -3,6 +3,8 @@ function main(templateDatas, id) {
     var linebreak = '[linebreak]';
     var highlightUserWords = true;
 
+    var userPrompts = [];
+
     for (var i = 0; i < templateDatas.length; i++) {
         var templateData = templateDatas[i];
         if (!templateData.inputs || templateData.inputs.length < 1) {
@@ -12,6 +14,8 @@ function main(templateDatas, id) {
 
         for (var j = 0; j < templateData.inputs.length; j++) {
             var element = templateData.inputs[j];
+            userPrompts.push(UserPromptFromText(i, j, element));
+
             var answer = '';
             var attempts = 0;
             do {
@@ -61,4 +65,16 @@ function createElement(type, attributes, innerHTML) {
         element.innerHTML = innerHTML;
     }
     return element;
-};
+}
+
+function UserPrompt(storyIndex, id, prompt, userResponse){
+    this.storyIndex = storyIndex;
+    this.id = id;
+    this.prompt = prompt;
+    this.userResponse = userResponse;
+}
+
+function UserPromptFromText(storyIndex, promptIndex, promptText){
+    var id = '[' + 's:' + storyIndex + ',p:' + promptIndex + ']';
+    return new UserPrompt(storyIndex, id, promptText, '');
+}

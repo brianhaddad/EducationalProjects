@@ -92,13 +92,13 @@ What happens when we select a file that isn't a proper template file?
 # Advanced Ideas
 The advanced version of this project could probably use a lot of refactoring, but for now let's stick with advanced features we could add:
 * Can we get it working with multiple files at once? Hint: the file picker isn't currently configured to allow selecting multiple files. That might be something we can configure in the HTML. You'll need to nest all of the code in `main()` in an outer loop. As we did in the Aesthetic Upgrades above, we'll want to give the user some indication of their progress through the stories.
+* Better output. For now we're using a pre tag, but the text could be easily manipulated into HTML for cleaner, better formatting. We could put it in paragraph tags, style our paragraphs, and generally present it better. With our `replace()` method, we could even put the inserted words in span tags to give them separate formatting as well so they stand out.
 * Some elements of randomization. Perhaps the order the user inputs things could be randomized. Perhaps the program could have pre-existing lists of elements to insert randomly so that we can bypass the user input stage and still get fun results.
 * Better user experience. The built-in `prompt()` and `alert()` functions that we're using to interact with our user are antiquated, ugly, and considered bad practice. The proper way to do this would be to dynamically generate an HTML form to collect the data. This would be a lot of work, but it would be easier than you might think.
+
+## Additional Challenges:
+* Animate the story reveal as though the letters are being typed on a typewriter. Randomize the length of time between "key presses" to simulate someone typing on a keyboard. Use a single variable to control the overall speed of the reveal (maybe even store the value in the standard "words per minute" or WPM unit).
 * Better styling. I am not a web designer. My CSS is ugly. Maybe some more customized input elements, better page styling, prettier text...
 * More advanced template options.
     * Could the templates automatically substitute in "a" or "an" properly? Could a validator be written or perhaps found that can determine if the user input is valid (not just present). For example, if prompting for a singular noun, are there any quick, easy checks we can make to determine the likelihood that the input is actually a singular noun?
     * What would it take to allow the template writer to reuse one input multiple times? Could the input be given an identifier perhaps, then that identifier could be reused in curly braces instead of sqaure brackets?
-* Better output. For now we're using a pre tag, but the text could be easily manipulated into HTML for cleaner, better formatting. We could put it in paragraph tags, style our paragraphs, and generally present it better. With our `replace()` method, we could even put the inserted words in span tags to give them separate formatting as well so they stand out.
-
-## Additional Challenges:
-* Animate the story reveal as though the letters are being typed on a typewriter. Randomize the length of time between "key presses" to simulate someone typing on a keyboard. Use a single variable to control the overall speed of the reveal (maybe even store the value in the standard "words per minute" or WPM unit).

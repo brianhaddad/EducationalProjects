@@ -1,3 +1,3 @@
-This is a sample [singular noun]. It [present singular verb] a lot.
+This is a sample [singular noun]. It [present tense verb] a lot.
 I have a/an [adjective] [singular noun].
 The end.

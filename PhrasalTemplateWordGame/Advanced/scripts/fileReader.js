@@ -1,4 +1,4 @@
-async function goGoGadgetFileReader(id, dest) {
+async function goGoGadgetFileReader(id, dest, func) {
     const files = document.getElementById(id).files;
     if (files.length < 1){
         alert('Error: You must select a file first.');
@@ -6,7 +6,7 @@ async function goGoGadgetFileReader(id, dest) {
     }
     const fileTexts = await readFileArray(files);
     //For now we'll just worry about the first one, can't select more than one in the file picker anyway.
-    main(fileTexts.map(n => new PhrasalTemplate(n)), dest);
+    func(fileTexts.map(n => new PhrasalTemplate(n)), dest);
 }
 
 //Learned basics of extracting text between brackets here:

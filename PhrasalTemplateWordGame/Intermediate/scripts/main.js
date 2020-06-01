@@ -12,7 +12,7 @@ function main(templateData){
             if (attempts > 2){
                 alert('You must enter a value for ' + element + ' to proceed.');
             }
-            answer = prompt('(' + (i + 1) + '/' + templateData.inputs.length + ') Please input a ' + element)
+            answer = prompt('(' + (i + 1) + '/' + templateData.inputs.length + ') Please input a ' + element);
         }
         while (!answer || answer.length == 0);
         templateData.string = templateData.string.replace(element, answer);

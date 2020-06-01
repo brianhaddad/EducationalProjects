@@ -2,11 +2,12 @@
 <html>
     <head>
         <title>Phrasal Template Word Game</title>
-        <link rel="stylesheet" href="style/style.css">
+        <link rel="stylesheet" href="style/style.css" />
+        <link rel="stylesheet" href="style/mvp.css" />
     </head>
     <body>
         <div class="controls">
-            <label for="inputText">Select a text file containing the phrasal template:</label><br />
+            <label for="inputText">Select one or more text files containing a phrasal template:</label>
             <input type="file" name="inputText" id="inputText" accept=".txt" multiple />
             <input type="button" value="Play Game" onclick="javascript:goGoGadgetFileReader('inputText', 'main');" />
             <input type="button" value="Clear Output" onclick="javascript:clearOutput('main');" />

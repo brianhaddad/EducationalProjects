@@ -7,7 +7,6 @@ body
 {
     padding: 5px;
     margin: 5px;
-    border: 1px solid blue;
 }
 
 .story h1, .story h3
@@ -32,7 +31,6 @@ body
 {
     padding: 5px;
     margin: 10px;
-    border: 1px solid black;
     width: 50%;
     margin: 10px auto;
     display: none;
@@ -43,8 +41,4 @@ body
     padding: 5px;
     width: 50%;
     margin: 10px auto;
-}
-
-.controls input{
-    margin: 5px;
 }

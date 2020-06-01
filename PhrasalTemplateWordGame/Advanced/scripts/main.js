@@ -37,7 +37,7 @@ function main(templateDatas, id) {
         event.preventDefault();
         receiveInput(formContainerName, id, userPrompts, templateDatas);
     });
-    for (var i=0; i<userPrompts.length; i++){
+    for (var i = 0; i < userPrompts.length; i++){
         var inputDiv = createElement('div');
         var inputLabel = createElement('label', {'for':userPrompts[i].id}, 'Please input a ' + userPrompts[i].prompt);
         var input = createElement('input', {'type':'text', 'name':userPrompts[i].id});
@@ -45,7 +45,7 @@ function main(templateDatas, id) {
         inputDiv.appendChild(input);
         form.appendChild(inputDiv);
     }
-    var submit = createElement('input', {'type':'submit', 'value':'Submit'})
+    var submit = createElement('input', {'type':'submit', 'value':'Submit'});
     form.appendChild(submit);
     formContainer.appendChild(form);
 
@@ -62,7 +62,7 @@ function receiveInput(inId, outId, userPrompts, templateDatas){
 
     //Phase 2b: Collect user input from form and validate that the user entered values.
     var missingData = false;
-    for (var i=0; i<userPrompts.length; i++){
+    for (var i = 0; i < userPrompts.length; i++){
         var answer = form[userPrompts[i].id].value;
         if (!answer || answer.length == 0){
             missingData = true;
@@ -140,7 +140,7 @@ function UserPromptFromText(storyIndex, promptIndex, promptText){
 //Based on information from here:
 //https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 function scrambleArray(a){
-    for (var i=a.length-1; i>0; i--){
+    for (var i = a.length-1; i > 0; i--){
         var j = Math.floor(Math.random() * (i + 1));
         var temp = a[i];
         a[i] = a[j];

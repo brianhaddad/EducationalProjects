@@ -3,7 +3,7 @@ function main(templateData){
         alert('Error: This template appears to be invalid. Please select a valid template file for the game.');
         return null;
     }
-    for (var i=0; i<templateData.inputs.length; i++){
+    for (var i = 0; i < templateData.inputs.length; i++){
         var element = templateData.inputs[i];
         var answer = '';
         var attempts = 0;

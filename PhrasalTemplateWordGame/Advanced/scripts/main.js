@@ -1,8 +1,7 @@
 function main(templateDatas, id) {
     var container = document.getElementById(id);
-    var linebreak = '[linebreak]';
-    var highlightUserWords = true;
     var scramblePromptOrder = true;
+    var formContainerName = 'ptwgFormContainer';
 
     var userPrompts = [];
 
@@ -21,28 +20,69 @@ function main(templateDatas, id) {
         }
     }
 
-    //Phase 2: Collect user input.
+    //Phase 2a: Prepare form to collect user input.
     if (scramblePromptOrder){
         scrambleArray(userPrompts);
     }
-    for (var i=0; i<userPrompts.length; i++){
-        var answer = '';
-        var attempts = 0;
-        do {
-            attempts++;
-            if (attempts > 2) {
-                alert('You must enter a value for ' + userPrompts[i].prompt + ' to proceed.');
-            }
-            answer = prompt('Item ' + (i + 1) + '/' + userPrompts.length + '\nPlease input a ' + userPrompts[i].prompt)
-        }
-        while (!answer || answer.length == 0);
-        if (highlightUserWords){
-            answer = '<span class="user_answer">' + answer + '</span>';
-        }
-        userPrompts[i].userResponse = answer;
-    }
 
-    //Phase 3: Add the user responses into the text.
+    var formContainer = document.getElementById(formContainerName);
+    if (!formContainer){
+        formContainer = createElement('div', {'id':formContainerName});
+        container.appendChild(formContainer);
+    }
+    formContainer.innerHTML = '';
+
+    var form = createElement('form', {});
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+        receiveInput(formContainerName, id, userPrompts, templateDatas);
+    });
+    for (var i=0; i<userPrompts.length; i++){
+        var inputDiv = createElement('div');
+        var inputLabel = createElement('label', {'for':userPrompts[i].id}, 'Please input a ' + userPrompts[i].prompt);
+        var input = createElement('input', {'type':'text', 'name':userPrompts[i].id});
+        inputDiv.appendChild(inputLabel);
+        inputDiv.appendChild(input);
+        form.appendChild(inputDiv);
+    }
+    var submit = createElement('input', {'type':'submit', 'value':'Submit'})
+    form.appendChild(submit);
+    formContainer.appendChild(form);
+
+    container.style.display = 'block';
+}
+
+function receiveInput(inId, outId, userPrompts, templateDatas){
+    var formContainer = document.getElementById(inId);
+    var container = document.getElementById(outId);
+
+    var form = formContainer.children[0];
+    var linebreak = '[linebreak]';
+    var highlightUserWords = true;
+
+    //Phase 2b: Collect user input from form and validate that the user entered values.
+    var missingData = false;
+    for (var i=0; i<userPrompts.length; i++){
+        var answer = form[userPrompts[i].id].value;
+        if (!answer || answer.length == 0){
+            missingData = true;
+            form[userPrompts[i].id].style.backgroundColor = '#ffaaaa';
+        }
+        else{
+            form[userPrompts[i].id].style.backgroundColor = '';
+            if (highlightUserWords){
+                answer = '<span class="user_answer">' + answer + '</span>';
+            }
+            userPrompts[i].userResponse = answer;
+        }
+    }
+    if (missingData){
+        return;
+    }
+    //If successfully pulled all answers:
+    formContainer.innerHTML = '';
+
+    //Phase 3: Substitute the user responses into the template.
     for (var i = 0; i < userPrompts.length; i++) {
         templateDatas[userPrompts[i].storyIndex].string =
             templateDatas[userPrompts[i].storyIndex].string.replace(userPrompts[i].id, userPrompts[i].userResponse);
@@ -66,7 +106,6 @@ function main(templateDatas, id) {
 
         container.appendChild(story);
     }
-    container.style.display = 'block';
 }
 
 function clearOutput(id){

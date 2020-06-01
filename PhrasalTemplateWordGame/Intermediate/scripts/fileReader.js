@@ -34,7 +34,7 @@ async function readFileArray(fileArray) {
         });
     };
     let files = [];
-    for (var i=0; i<fileArray.length; i++) {
+    for (let i=0; i<fileArray.length; i++) {
         try {
             let file = await readFileAsText(fileArray[i]);
             files.push(file);

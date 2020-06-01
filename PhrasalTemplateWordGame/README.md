@@ -6,7 +6,7 @@ There are multiple versions.
 * Intermediate: this one shows off some minor changes to the simple code that will enhance the programmer's skills and improve the user experience.
 * Advanced: this version is a challenge version where the entire user experience is improved, greatly increasing the complexity of the code.
 
-Getting from one version to the next requires increasingly greater understandings and skills.
+Getting from one version to the next requires increasingly greater understandings and skills. Additionally, at the end some extra difficult challenges are presented, mostly to get the imagination sparked. If anyone shows interest in the challenges, I might consider adding them as another stage of this project.
 
 # Objectives
 * Don't worry about the nitty gritty of "good" javascript. Just write code that works and learn basic concepts.

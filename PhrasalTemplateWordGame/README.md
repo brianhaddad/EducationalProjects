@@ -28,14 +28,24 @@ This project can be completed with Notepad or some other basic text editor, but 
 Some students may struggle with saving files with a particular extension, should the need arise. The simple version of this project does not require creating any new files or documents, though in order to complete some of the more advanced features they may need help setting their operating system to display extensions, or at least learning to use their text editor to override the default filetype.
 
 ## Quick Overview
-Talk the students through the existing code briefly. Introduce concept of "black box" code where we know how to use it, but don't really care how it works. It takes information in and spits information out predictably. Show off the structure of the data passed into main(), talk about commented-out code, comments, and console logging, and show how to open the project and look at console output and explore the data in the console.
+Briefly talk the students through the existing code in the sample project.
 
-Make sure to hit the following points:
-* fileReader.js (black box for now)
-* main.js (where we'll write our code)
-* sample_story.txt (the download for the full story will be provided later)
-* style.css (where we'll change how things are rendered on the screen)
-* index.html (the "physical" structure of the page we're working with)
+### `index.html`
+Talk about how HTML is a markup language for formatting elements on a page. Go over the elements and how they are structured by the HTML. Show the links to the style sheet and the scripts.
+
+### `style.css`
+Show off the initial CSS and talk about what role the style sheet plays.
+
+### `fileReader.js`
+Introduce the concept of "black box" code where we learn how to use it, but don't need to care how it works. It takes information in and spits information out predictably. Talk about comments and a few other features of the code. Most importantly, examine the `PhrasalTemplate` data structure and what that `match()` call will put in the `inputs` property. Touch very briefly on the REGEX, but be sure to mention that we won't be using REGEX at all for the simple project. Talk a little abou types and typing, and explain that javascript doesn't really care about types and so it's important that we keep track of what kind of data we expect to find where.
+
+Show where this file takes the processed file data and passes it into `main()`.
+
+### `sample_story.txt`
+Before getting to `main.js`, open the sample template file and just show what it contains. Talk about the role the square brackets play and how that relates to the mysterious REGEX in the black box code.
+
+### `main.js`
+Talk about the function and the commented-out code, then show off console logging and how to examine the output in the browser console. Explain that all of our code today will be written in `main()`.
 
 ## Write the Code
 There are relatively few moving parts here. First the students should look at the data that we're starting with and figure out what might need to be done in order to get to the end goal. Define the goal.

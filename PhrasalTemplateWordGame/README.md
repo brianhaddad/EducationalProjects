@@ -102,7 +102,7 @@ What happens when we select a file that isn't a proper template file?
 * Add a way to know how many total items are needed and which one you're being asked about.
 
 # Advanced Improvements
-The advanced version of this project could probably use a lot of refactoring, but for now let's stick with advanced features we could add:
+The advanced version of this project could probably use a lot of refactoring, but for now let's stick with advanced features we can implement:
 * Can we get it working with multiple files at once? Hint: the file picker isn't currently configured to allow selecting multiple files. That might be something we can configure in the HTML. You'll need to nest all of the code in `main()` in an outer loop. As we did in the Aesthetic Upgrades above, we'll want to give the user some indication of their progress through the stories.
 * Better output. For now we're using a pre tag, but the text could be easily manipulated into HTML for cleaner, better formatting. We could put it in paragraph tags, style our paragraphs, and generally present it better. With our `replace()` method, we could even put the inserted words in span tags to give them separate formatting as well so they stand out.
 * Some elements of randomization. Perhaps the order the user inputs things could be randomized. Perhaps the program could have pre-existing lists of elements to insert randomly so that we can bypass the user input stage and still get fun results.

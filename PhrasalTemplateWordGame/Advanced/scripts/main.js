@@ -2,6 +2,7 @@ function main(templateDatas, id) {
     var container = document.getElementById(id);
     var linebreak = '[linebreak]';
     var highlightUserWords = true;
+    var scramblePromptOrder = true;
 
     var userPrompts = [];
 
@@ -21,6 +22,9 @@ function main(templateDatas, id) {
     }
 
     //Phase 2: Collect user input.
+    if (scramblePromptOrder){
+        scrambleArray(userPrompts);
+    }
     for (var i=0; i<userPrompts.length; i++){
         var answer = '';
         var attempts = 0;
@@ -92,4 +96,15 @@ function UserPrompt(storyIndex, id, prompt, userResponse){
 function UserPromptFromText(storyIndex, promptIndex, promptText){
     var id = '[' + 's:' + storyIndex + ',p:' + promptIndex + ']';
     return new UserPrompt(storyIndex, id, promptText, '');
+}
+
+//Based on information from here:
+//https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function scrambleArray(a){
+    for (var i=a.length-1; i>0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
 }

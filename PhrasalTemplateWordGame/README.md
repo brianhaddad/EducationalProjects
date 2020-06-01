@@ -8,9 +8,11 @@ There are multiple versions.
 
 Getting from one version to the next requires increasingly greater understandings and skills.
 
-Objectives:
+# Objectives
 * Don't worry about the nitty gritty of "good" javascript. Just write code that works and learn basic concepts.
-* Try implementing some of the intermediate features on your own, without looking at the final version of the code.
+* Explore and get familiar with the various parts of a web page and javascript project.
+* Write some simple code to achieve a goal, and learn to find and recognize limitations on that simple code.
+* Identify those who might wish to try implementing some of the intermediate features or fixing some of the bugs.
 
 # Simple Teaching Agenda
 Try to touch on the following points of interest as you present the code and work the students through completing the project.
@@ -18,7 +20,7 @@ Try to touch on the following points of interest as you present the code and wor
 ## Introduction
 Does anyone already have any experience with programming? Let's hear about it.
 
-Touch on objectives (above). This lesson will be excruciatingly simple, but there will be some challenges at the end, and I'll be happy to follow up with anyone who would like to learn more or tackle the challenges. My email address and a link to the GitHub page will be provided at the end, as well as an overview of the GitHub project.
+Touch on objectives (above). This lesson will be excruciatingly simple, but there will be some challenges at the end, and I'll be happy to follow up with anyone who would like to learn more or tackle the challenges. My email address and a link to the GitHub page will be provided at the end, and I will give a guided overview of the GitHub project.
 
 ## Download and Setup
 Ideally, the final story should be a surprise for the student. It's more fun that way. You can choose to provide the story in the initial download or give it to them at the end and use a dummy file for development.

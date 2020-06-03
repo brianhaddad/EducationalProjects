@@ -24,6 +24,14 @@ Touch on objectives (above). This lesson will be excruciatingly simple, but ther
 
 We will be glossing over a lot for this lesson. If anyone has any questions, I will do my best to address them briefly, and if it can't be done quickly then we'll write it down and come back to it later (time permitting) or outside of the class session.
 
+## Prerequisite Skills
+It is helpful, but not necessary, for the student to meet the following prerequisites before the class:
+* Extract a .zip archive file to a folder.
+* Open and navigate a basic text editor (not a word processor) with some degree of competence.
+* Open an arbitrary, non .txt file, using their basic text editor.
+
+If any students lack to ability to do any of these tasks, take some time to cover any required topics before continuing.
+
 ## Download and Setup
 Ideally, the final story should be a surprise for the student. It's more fun that way. You can choose to provide the story in the initial download or give it to them at the end and use a dummy file for development. Personally, I will be providing the contents of the Template folder in a .zip download, and at the end of the class I will provide access to a separate download for the final stories.
 

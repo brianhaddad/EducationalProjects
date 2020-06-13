@@ -17,6 +17,7 @@ function Typist(templateDatas, container){
             currentStory++;
             timeout = 2000;
         }
+        window.scrollTo(0,document.body.scrollHeight);
         if (currentStory < stories.length){
             setTimeout(update, timeout);
         }

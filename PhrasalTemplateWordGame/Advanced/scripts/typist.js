@@ -15,7 +15,8 @@ function Typist(templateDatas, container){
         var timeout = stories[currentStory].update();
         if (timeout == 0){
             currentStory++;
-            timeout = 2000;
+            var variation = 100;
+            timeout = Math.max(1, Math.floor((4 * msPerLetter()) + (Math.random() * 2 * variation) - variation));
         }
         window.scrollTo(0,document.body.scrollHeight);
         if (currentStory < stories.length){
@@ -53,7 +54,8 @@ function Story(templateData, storyId, outputContainer){
         var timeout = paragraphs[currentParagraph].update();
         if (timeout === 0){
             currentParagraph++;
-            timeout = 1000;
+            var variation = 100;
+            timeout = Math.max(1, Math.floor((2 * msPerLetter()) + (Math.random() * 2 * variation) - variation));
         }
         if (currentParagraph < paragraphs.length){
             return timeout;
@@ -85,7 +87,7 @@ function Paragraph(text, outputContainer){
 }
 
 function msPerLetter(){
-    var wpm = 80;
+    var wpm = 95;
     var avgWordLength = 4.7;
     return 1000 * (60 / (avgWordLength * wpm));
 }

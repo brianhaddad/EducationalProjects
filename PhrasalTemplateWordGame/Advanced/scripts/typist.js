@@ -76,7 +76,7 @@ function Paragraph(text, outputContainer){
         this.container.innerHTML += letters[currentLetter];
         currentLetter++;
         if (currentLetter < letters.length){
-            return Math.max(1, Math.floor((msPerLetter()) + (Math.random() * 2 * variation) - variation));
+            return Math.max(1, Math.floor(msPerLetter() + (Math.random() * 2 * variation) - variation));
         }
         else {
             return 0;
@@ -87,5 +87,5 @@ function Paragraph(text, outputContainer){
 function msPerLetter(){
     var wpm = 80;
     var avgWordLength = 4.7;
-    return 1000 * (60 / (avgWordLength * wpm));;
+    return 1000 * (60 / (avgWordLength * wpm));
 }

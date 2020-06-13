@@ -26,10 +26,7 @@ function Typist(templateDatas, container){
 function Story(templateData, storyId, outputContainer){
     var attachedStory = false;
     var id = storyId;
-    var linebreak = '[linebreak]';
-    var storyParagraphs = templateData.string
-        .replace(/(\r\n|\n|\r)/gm, linebreak)
-        .split(linebreak);
+    var storyParagraphs = templateData.string.split(/(\r\n|\n|\r)/gm);
     var container = outputContainer;
     var currentParagraph = 0;
 

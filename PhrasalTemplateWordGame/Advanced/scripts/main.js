@@ -57,8 +57,13 @@ function receiveInput(inId, outId, userPrompts, templateDatas){
     var container = document.getElementById(outId);
 
     var form = formContainer.children[0];
-    var linebreak = '[linebreak]';
-    var highlightUserWords = true;
+    var highlightUserWords = false;
+    
+    var typeEffect = true;
+
+    if (highlightUserWords && typeEffect){
+        console.log('The type effect is currently incompatible with underlining words.');
+    }
 
     //Phase 2b: Collect user input from form and validate that the user entered values.
     var missingData = false;
@@ -89,22 +94,28 @@ function receiveInput(inId, outId, userPrompts, templateDatas){
     }
 
     //Phase 4: Assemble the stories for output.
-    for (var i = 0; i < templateDatas.length; i++) {
-        var templateData = templateDatas[i];
-        var story = createElement('div', { 'class': 'story' });
-        var title = createElement('h1', {}, 'Story ' + (i + 1));
-        var subtitle = createElement('h3', {}, 'From: ' + templateData.name);
-        story.appendChild(title);
-        story.appendChild(subtitle);
-
-        templateData.string = templateData.string.replace(/(\r\n|\n|\r)/gm, linebreak);
-        var lines = templateData.string.split(linebreak);
-        for (var j = 0; j < lines.length; j++) {
-            var p = createElement('p', {}, lines[j]);
-            story.appendChild(p);
+    if (typeEffect){
+        var typist = new Typist(templateDatas);
+        typist.start(container);
+    }
+    else{
+        for (var i = 0; i < templateDatas.length; i++) {
+            var templateData = templateDatas[i];
+            var story = createElement('div', { 'class': 'story' });
+            var title = createElement('h1', {}, 'Story ' + (i + 1));
+            var subtitle = createElement('h3', {}, 'From: ' + templateData.name);
+            story.appendChild(title);
+            story.appendChild(subtitle);
+    
+            templateData.string = templateData.string.replace(/(\r\n|\n|\r)/gm, linebreak);
+            var lines = templateData.string.split(linebreak);
+            for (var j = 0; j < lines.length; j++) {
+                var p = createElement('p', {}, lines[j]);
+                story.appendChild(p);
+            }
+    
+            container.appendChild(story);
         }
-
-        container.appendChild(story);
     }
 }
 

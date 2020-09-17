@@ -1,0 +1,52 @@
+<!doctype HTML>
+<html>
+    <head>
+        <title>Question Formatter</title>
+        <link rel="stylesheet" href="style/mvp.css" />
+        <link rel="stylesheet" href="style/style.css" />
+    </head>
+    <body>
+        <div id="main"></div>
+        <script src="scripts/symbols.js"></script>
+        <script src="scripts/helpers.js"></script>
+        <script src="scripts/cke_loader.js"></script>
+        <script src="scripts/cke_editor.js"></script>
+        <script src="scripts/section_handler.js"></script>
+        <script src="scripts/user_selection_classes.js"></script>
+        <script src="scripts/object_helper.js"></script>
+        <script src="scripts/question_validator.js"></script>
+        <script>
+            const main = 'main';
+            let loader = {};
+            let editor = {};
+
+            function startLoader() {
+                loader = new CKELoader(main, LOADER_MODES.EDITOR);
+                loader.display(LOADER_STEPS.INITIALIZATION);
+            }
+
+            function startNew() {
+                editor = new CKEEditor(main);
+                editor.startNewFile();
+            }
+
+            function showLoadOrNew() {
+                const m = document.getElementById(main);
+                m.innerHTML = '';
+                m.appendChild(makeButtonWithJavascriptAction(() => {startLoader();}, 'Load JSON'));
+                m.appendChild(makeButtonWithJavascriptAction(() => {startNew();}, 'New JSON'));
+            }
+
+            function reset(override) {
+                if (override || confirm("Are you sure you want to reset?")) {
+                    showLoadOrNew();
+                } 
+                else {
+                    return false;
+                }
+            }
+
+            reset(true);
+        </script>
+    </body>
+</html>

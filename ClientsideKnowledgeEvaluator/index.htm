@@ -1,0 +1,42 @@
+<!doctype HTML>
+<html>
+    <head>
+        <title>Knowledge Evaluator</title>
+        <link rel="stylesheet" href="style/mvp.css" />
+        <link rel="stylesheet" href="style/style.css" />
+    </head>
+    <body>
+        <div id="main" class="main"></div>
+        <script src="scripts/symbols.js"></script>
+        <script src="scripts/helpers.js"></script>
+        <script src="scripts/cke_loader.js"></script>
+        <script src="scripts/user_selection_classes.js"></script>
+        <script src="scripts/multiple_choice_question.js"></script>
+        <script src="scripts/question_validator.js"></script>
+        <script src="scripts/test_admin.js"></script>
+        <script src="scripts/keyboard_input_handler.js"></script>
+        <script>
+            let loader = {};
+
+            function reset(override) {
+                if (override || confirm("Are you sure you want to reset?")) {
+                    loader = new CKELoader('main', LOADER_MODES.TEST);
+                    loader.display(LOADER_STEPS.INITIALIZATION);
+                    keyboardHandler.setMode(KEYBOARD_MODES.SETUP);
+                } 
+                else {
+                    return false;
+                }
+            }
+
+            function returnToTestOptions() {
+                if (confirm('Are you sure you want to exit the test and return to setup?')){
+                    keyboardHandler.setMode(KEYBOARD_MODES.SETUP);
+                    loader.display(LOADER_STEPS.TEST_FILE_LOAD);
+                }
+            }
+
+            reset(true);
+        </script>
+    </body>
+</html>

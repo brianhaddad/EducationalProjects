@@ -1,0 +1,12 @@
+LOADER:
+the file selection portion needs instructions, possibly with illustrations (though until directory names are finalized this would be premature)
+
+TEST ADMINISTRATOR:
+timed test mode? <- even though it was my idea, I'm leaning toward no on this one (Brian)
+results mode filtering dropdown instead of toggle button to show or hide correct questions
+    could select from All, Correct Only, Incorrect Only, Unanswered Only, Marked Only, etc.
+
+QUESTION JSON MANAGER:
+filename entry
+    need to be able to hit enter to accept?
+        could put original object into a "submit on enter" entity based on a form whose submit is a javascript action

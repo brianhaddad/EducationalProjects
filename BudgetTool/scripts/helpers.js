@@ -1,46 +1,13 @@
-//Global helper functions the might be better off somewhere else but I'm putting them here to be stubborn.
+function debuggerAlert(message){
+    console.log(message);
+    debugger;
+}
 
 function userAlert(message, windowTitle) {
     const children = [];
     children.push(createElement('h1', {}, windowTitle ?? 'Alert'));
     children.push(createElement('p', {}, message));
     return makeOKPopup(children);
-}
-
-function uc(str) {
-    return str.toUpperCase();
-}
-function fileNameEndsIn(fn, ext){
-    return uc(fn).indexOf(uc(ext)) === uc(fn).replace(uc(ext), '').length;
-}
-
-const VALIDATION_RULES = {
-    FILENAME: (txt) => {
-        //NOTE: rg1 seems to test that none of the forbidden characters are present, so does not need to be negated.
-        const rg1 = /^[^\\/:\*\?"<>\|]+$/; // forbidden characters \ / : * ? " < > |
-        const rg2 = /^\./; // cannot start with dot (.)
-        const rg3 = /^(nul|prn|con|lpt[0-9]|com[0-9])(\.|$)/i; // forbidden file names
-        return rg1.test(txt) && !rg2.test(txt) && !rg3.test(txt);
-    },
-    QUESTION_ANSWER_OPTION: (txt) => {
-        if (!txt || txt.length < 1){
-            return false;
-        }
-        const rg1 = /\n/;
-        return !rg1.test(txt);
-    },
-};
-
-function runValidation(rules){
-    const myRules = rules;
-    return function runValidation(value) {
-        for(const rule of myRules){
-            if (!rule(value)){
-                return false;
-            }
-        }
-        return true;
-    };
 }
 
 function makeOKPopup(children){
@@ -66,19 +33,8 @@ function makeOKPopup(children){
 
 function makeOKButtonBar(action){
     const container = createElement('div', { 'class': 'ok_button_bar' });
-    container.appendChild(makeButton(bigButtonData('OK', action)));
+    container.appendChild(makeButton.button('OK', action));
     return container;
-}
-
-function makeOKCancelButtonBar(incomingOKButtonData, incomingCancelButtonData){
-    const container = createElement('div', { 'class': 'ok_button_bar' });
-    container.appendChild(makeButtonGroup([incomingCancelButtonData, incomingOKButtonData]));
-    return container;
-}
-
-function debuggerAlert(message){
-    console.log(message);
-    debugger;
 }
 
 function createElement(type, attributes, innerHTML) {
@@ -99,57 +55,31 @@ function makeFieldset(legendText){
     return fieldset;
 }
 
-function makeInputButtonWithJavascriptAction(displayText, javascriptAction, toolTip){
-    const attributes = { 'type': 'button', 'value': displayText };
-    if (toolTip && toolTip.length > 0){
-        attributes['title'] = toolTip;
+const makeButton = {
+    input: function (displayText, javascriptAction, toolTip) {
+        const attributes = { 'type': 'button', 'value': displayText };
+        if (toolTip && toolTip.length > 0){
+            attributes['title'] = toolTip;
+        }
+        const button = createElement('input', attributes);
+        button.onclick = javascriptAction;
+        return button;
+    },
+    button: function (displayText, javascriptAction, toolTip) {
+        const attributes = {};
+        if (toolTip && toolTip.length > 0){
+            attributes['title'] = toolTip;
+        }
+        const button = createElement('button', attributes, displayText);
+        button.onclick = javascriptAction;
+        return button;
     }
-    const button = createElement('input', attributes);
-    button.onclick = javascriptAction;
-    return button;
-}
-
-function makeButtonWithJavascriptAction(javascriptAction, optionalDisplayText, toolTip){
-    const attributes = {};
-    if (toolTip && toolTip.length > 0){
-        attributes['title'] = toolTip;
-    }
-    const button = createElement('button', attributes, optionalDisplayText);
-    button.onclick = javascriptAction;
-    return button;
-}
-
-function makeButton(buttonData){
-    switch (buttonData['type']){
-        case BUTTON_TYPES.BIG_BUTTON:
-            return makeButtonWithJavascriptAction(buttonData['action'], buttonData['text'], buttonData['tip']);
-            break;
-
-        case BUTTON_TYPES.INPUT_TYPE_BUTTON:
-            return makeInputButtonWithJavascriptAction(buttonData['text'], buttonData['action'], buttonData['tip']);
-            break;
-
-        default:
-            return buttonData;
-    }
-}
-
-function bigButtonData(buttonText, buttonAction, toolTip){
-    return buttonData(BUTTON_TYPES.BIG_BUTTON, buttonText, buttonAction, toolTip);
-}
-
-function inputButtonData(buttonText, buttonAction, toolTip){
-    return buttonData(BUTTON_TYPES.INPUT_TYPE_BUTTON, buttonText, buttonAction, toolTip);
-}
-
-function buttonData(buttonType, buttonText, buttonAction, toolTip){
-    return {'type': buttonType, 'text': buttonText, 'action': buttonAction, 'tip': toolTip};
-}
+};
 
 function makeButtonGroup(buttons){
     const container = createElement('div', { 'class': '' });
     for (let i = 0; i < buttons.length; i++){
-        container.appendChild(makeButton(buttons[i]));
+        container.appendChild(buttons[i]);
     }
     return container;
 }
@@ -157,7 +87,7 @@ function makeButtonGroup(buttons){
 function makeButtonBar(buttons){
     const container = createElement('div', { 'class': 'button_bar' });
     for (let i = 0; i < buttons.length; i++){
-        container.appendChild(makeButton(buttons[i]));
+        container.appendChild(buttons[i]);
     }
     return container;
 }
@@ -196,8 +126,3 @@ function getDateNow(){
 function getDateNowString(){
     return getDateNow().toISOString();
 }
-
-const BUTTON_TYPES = {
-    BIG_BUTTON: Symbol('Big Button'),
-    INPUT_TYPE_BUTTON: Symbol('Input Type Button'),
-};

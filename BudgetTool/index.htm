@@ -1,0 +1,24 @@
+<!doctype HTML>
+<html>
+    <head>
+        <title>Budget Tool</title>
+        <link rel="stylesheet" href="style/style.css" />
+        <link rel="stylesheet" href="style/mvp.css" />
+    </head>
+    <body>
+        <div id="main">
+            <div class="button_bar">
+                <label for="dataPicker">Select one or more text files containing budget data:</label>
+                <input type="file" name="dataPicker" id="dataPicker" accept=".json" multiple />
+                <input type="button" value="Load Data" onclick="javascript:loadState('dataPicker');" />
+                <input type="button" value="Save Data" onclick="javascript:saveState();" />
+            </div>
+            <div id="budgeter">
+                <!-- this area for the interface that the budgeter is in charge of -->
+            </div>
+        </div>
+        <script src="scripts/helpers.js"></script>
+        <script src="scripts/budgeter.js"></script>
+        <script src="scripts/main.js"></script>
+    </body>
+</html>

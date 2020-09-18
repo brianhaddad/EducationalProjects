@@ -146,3 +146,44 @@ fieldset textarea {
     background-color: #c03a47;
     color: #ffffff;
 }
+
+@media print {
+    #controls {
+        display: none;
+    }
+    fieldset button {
+        display: none;
+    }
+    input[type=button] {
+        display: none;
+    }
+    .center_cell_pairs {
+        overflow-x: visible;
+        width: unset;
+    }
+    .center_cell_pairs label, .center_cell_pairs input {
+        overflow-x: visible;
+        width: unset;
+    }
+    .center_cell_pairs input[type=text] {
+        overflow-x: visible;
+        overflow: visible;
+        text-overflow: ellipsis;
+    }
+    fieldset input, fieldset select, fieldset option, fieldset textarea {
+        border: 0px;
+        overflow-x: visible;
+        overflow: visible;
+        text-overflow: unset;
+    }
+    fieldset select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: unset;
+    }
+    thead, th {
+        color: #000000;
+        background-color: unset;
+    }
+}

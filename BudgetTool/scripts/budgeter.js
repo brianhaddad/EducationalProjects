@@ -61,12 +61,14 @@ function Budgeter(divId){
         analysisOutputs['daily'] = summaryElements();
         analysisOutputs['paycheck'] = summaryElements();
         analysisOutputs['monthly'] = summaryElements();
+        analysisOutputs['annually'] = summaryElements();
 
         const innerContainer = createElement('div', {'class': 'report'});
 
         innerContainer.appendChild(createSummaryTable('Daily', 'daily'));
         innerContainer.appendChild(createSummaryTable('Biweekly', 'paycheck'));
         innerContainer.appendChild(createSummaryTable('Monthly', 'monthly'));
+        innerContainer.appendChild(createSummaryTable('Annually', 'annually'));
 
         container.appendChild(innerContainer);
         
@@ -104,6 +106,7 @@ function Budgeter(divId){
         const unit = 365;
         const monthlyConverter = unit / FREQUENCIES.MONTHLY['value'];
         const biweeklyConverter = unit / FREQUENCIES.BIWEEKLY['value'];
+        const annualConverter = unit / FREQUENCIES.ANNUALLY['value'];
         let incomePerDay = sumByUnit('earnings', unit);
         let expensesPerDay = sumByUnit('expenses', unit);
 
@@ -112,6 +115,9 @@ function Budgeter(divId){
 
         const paycheckIncome = incomePerDay * biweeklyConverter;
         const paycheckExpenses = expensesPerDay * biweeklyConverter;
+
+        const annualIncome = incomePerDay * annualConverter;
+        const annualExpenses = expensesPerDay * annualConverter;
 
 
         updateAnalysisOutput('daily', 'income', incomePerDay);
@@ -125,6 +131,10 @@ function Budgeter(divId){
         updateAnalysisOutput('paycheck', 'income', paycheckIncome);
         updateAnalysisOutput('paycheck', 'expenses', paycheckExpenses);
         updateAnalysisOutput('paycheck', 'remaining', paycheckIncome - paycheckExpenses);
+
+        updateAnalysisOutput('annually', 'income', annualIncome);
+        updateAnalysisOutput('annually', 'expenses', annualExpenses);
+        updateAnalysisOutput('annually', 'remaining', annualIncome - annualExpenses);
     };
 
     const updateAnalysisOutput = function (section, category, value) {

@@ -23,6 +23,19 @@ fieldset textarea {
     resize: none;
 }
 
+.negative_number {
+    color: #c51515;
+}
+
+.report table {
+    margin: 5px;
+}
+
+.report table tfoot {
+    font-weight: bold;
+    background-color: var(--color-accent);
+}
+
 .popup_class {
     position: fixed;
     top: 0px;
@@ -127,4 +140,9 @@ fieldset textarea {
 
 .clickable * {
     cursor: inherit;
+}
+
+.error_input {
+    background-color: #c03a47;
+    color: #ffffff;
 }

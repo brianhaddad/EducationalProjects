@@ -8,9 +8,13 @@ function Budgeter(divId){
         WEEKLY: {'name': 'Weekly', 'value': 52},
         DAILY: {'name': 'Daily', 'value': 365},
     };
-    const EXPENSE_ID_PREFIX = 'expense_';
-    const INCOME_ID_PREFIX = 'income_';
+    const frequencyDropdownOptions = {};
+    for (const n in FREQUENCIES){
+        const opt = FREQUENCIES[n];
+        frequencyDropdownOptions[opt['name']] = {'value': opt['value']};
+    }
     const output = document.getElementById(divId);
+    const analysisOutputs = {};
     let fileName = '';
     let budgetData = {
         'earnings': [],
@@ -20,48 +24,171 @@ function Budgeter(divId){
         'name':'',
         'amount':0.0,
         'frequency': FREQUENCIES.MONTHLY['value'],
+        'include': true,
     };
 
     const redrawInterface = function (){
         output.innerHTML = '';
+        const analysis = createAnalysis();
+        output.appendChild(analysis);
         //TODO: filename is editable?
-        const interface = makeFieldset(noFileName() ? 'Budgeter Interface' : fileName);
-        interface.appendChild(createElement('p', {}, 'Interface test. TODO: actually populate an interface based on the data.'));
-        for (let i = 0; i < budgetData['expenses'].length; i++){
-            //TODO: need a line item constructor of some kind
-            //this item needs to have inputs for the user to make changes that are then tracked
-            //maybe bring back validation and rules for things like the amount?
-            //how to represent the recurring schedule information?
-            //number of times per year?
-            const id = EXPENSE_ID_PREFIX + i;
-            const line = createElement('p', { 'id': id }, `${i}: ${dollarAmount(budgetData['expenses'][i]['amount'])}`);
-            //TODO: this shouldn't be onclick, it should be a little delete button for the line
-            line.onclick = () => removeExpense(id);
+        const earnings = createLineItemSectionHTML('earnings', 'Earnings', 'Add Income Item');
+        output.appendChild(earnings);
+        const expenses = createLineItemSectionHTML('expenses', 'Expenses', 'Add Expense Item');
+        output.appendChild(expenses);
+        updateAnalysisOutputs();
+    };
+
+    const sumByUnit = function (category, unit){
+        let total = 0;
+        for (let i = 0; i < budgetData[category].length; i++){
+            if (budgetData[category][i]['include']){
+                total += (budgetData[category][i]['amount'] * budgetData[category][i]['frequency']) / unit;
+            }
+        }
+        return total;
+    };
+
+    const createAnalysis = function (){
+        const container = makeFieldset('Analysis');
+        const summaryElements = function() {
+            return {
+            'income': createElement('span'),
+            'expenses': createElement('span'),
+            'remaining': createElement('span'),
+            };
+        };
+        analysisOutputs['daily'] = summaryElements();
+        analysisOutputs['paycheck'] = summaryElements();
+        analysisOutputs['monthly'] = summaryElements();
+
+        const innerContainer = createElement('div', {'class': 'report'});
+
+        innerContainer.appendChild(createSummaryTable('Daily', 'daily'));
+        innerContainer.appendChild(createSummaryTable('Biweekly', 'paycheck'));
+        innerContainer.appendChild(createSummaryTable('Monthly', 'monthly'));
+
+        container.appendChild(innerContainer);
+        
+        return container;
+    };
+
+    const createSummaryTable = function (title, elementsCategory){
+        const layout = createElement('table');
+        const header = createElement('thead');
+        const theadRow = createElement('tr');
+        theadRow.appendChild(createElement('th', { 'colspan': 2 }, title));
+        header.appendChild(theadRow);
+        layout.appendChild(header);
+        const incomeRow = createSummaryTableRow(elementsCategory, 'income', 'Income');
+        layout.appendChild(incomeRow);
+        const expensesRow = createSummaryTableRow(elementsCategory, 'expenses', 'Expenses');
+        layout.appendChild(expensesRow);
+        const remainingRow = createSummaryTableRow(elementsCategory, 'remaining', 'Remaining');
+        const tfoot = createElement('tfoot');
+        tfoot.appendChild(remainingRow);
+        layout.appendChild(tfoot);
+        return layout;
+    };
+
+    const createSummaryTableRow = function (elementsCategory, elementsSubcategory, title){
+        const row = createElement('tr');
+        row.appendChild(createElement('td', {}, title));
+        const td = createElement('td', {});
+        td.appendChild(analysisOutputs[elementsCategory][elementsSubcategory]);
+        row.appendChild(td);
+        return row;
+    };
+
+    const updateAnalysisOutputs = function () {
+        const unit = 365;
+        const monthlyConverter = unit / FREQUENCIES.MONTHLY['value'];
+        const biweeklyConverter = unit / FREQUENCIES.BIWEEKLY['value'];
+        let incomePerDay = sumByUnit('earnings', unit);
+        let expensesPerDay = sumByUnit('expenses', unit);
+
+        const monthlyIncome = incomePerDay * monthlyConverter;
+        const monthlyExpenses = expensesPerDay * monthlyConverter;
+
+        const paycheckIncome = incomePerDay * biweeklyConverter;
+        const paycheckExpenses = expensesPerDay * biweeklyConverter;
+
+
+        updateAnalysisOutput('daily', 'income', incomePerDay);
+        updateAnalysisOutput('daily', 'expenses', expensesPerDay);
+        updateAnalysisOutput('daily', 'remaining', incomePerDay - expensesPerDay);
+
+        updateAnalysisOutput('monthly', 'income', monthlyIncome);
+        updateAnalysisOutput('monthly', 'expenses', monthlyExpenses);
+        updateAnalysisOutput('monthly', 'remaining', monthlyIncome - monthlyExpenses);
+
+        updateAnalysisOutput('paycheck', 'income', paycheckIncome);
+        updateAnalysisOutput('paycheck', 'expenses', paycheckExpenses);
+        updateAnalysisOutput('paycheck', 'remaining', paycheckIncome - paycheckExpenses);
+    };
+
+    const updateAnalysisOutput = function (section, category, value) {
+        const negativeClass = 'negative_number';
+        analysisOutputs[section][category].innerHTML = dollarAmount(value);
+        if (value < 0){
+            analysisOutputs[section][category].classList.add(negativeClass);
+        }
+        else{
+            analysisOutputs[section][category].classList.remove(negativeClass);
+        }
+    };
+
+    const createLineItemSectionHTML = function (category, title, addButton) {
+        const interface = makeFieldset(title);
+        for (let i = 0; i < budgetData[category].length; i++){
+            const id = category + '_' + i;
+            const line = createLineItemHTML(category, id, budgetData[category][i]);
             interface.appendChild(line);
         }
-        interface.appendChild(makeButton.button('Add Expense Item', () => addExpense()));
-        output.appendChild(interface);
+        interface.appendChild(makeButton.button(addButton, () => addLineItem(category)));
+        return interface;
     };
 
-    const updateExpenseItem = function (id){
-        const index = indexFromId(id);
+    const createLineItemHTML = function (category, id, item){
+        const container = createElement('div', { 'class': 'button_bar' });
+        container.appendChild(ValidatedTextInput('Name', id + '_name', item['name'], runValidation([]), () => updateLineItem(category, id, 'name')));
+        container.appendChild(ValidatedTextInput('Amount', id + '_amount', item['amount'].toFixed(2), runValidation([VALIDATION_RULES.NON_EMPTY, VALIDATION_RULES.FLOAT]), () => updateLineItem(category, id, 'amount')));
+        container.appendChild(DropDownMenuSelector('Frequency', id + '_frequency', item['frequency'], frequencyDropdownOptions, () => updateLineItem(category, id, 'frequency')));
+        container.appendChild(Checkbox(id + '_include', 'Include', item['include'], () => updateLineItem(category, id, 'include')));
+        container.appendChild(makeButton.input('X', () => removeLineItem(id, category), 'Remove Item'));
+        return container;
     };
 
-    const removeExpense = function (id){
-        const index = indexFromId(id);
-        budgetData['expenses'].splice(index, 1);
+    const updateLineItem = function (category, id, field){
+        const index = indexFromId(id, category);
+        const value = field === 'include'
+            ? document.getElementById(id + '_' + field).checked
+            : document.getElementById(id + '_' + field).value;
+        if (field === 'amount'){
+            budgetData[category][index][field] = parseFloat(value);
+        }
+        else if (field === 'frequency'){
+            budgetData[category][index][field] = parseInt(value);
+        }
+        else{
+            budgetData[category][index][field] = value;
+        }
+        updateAnalysisOutputs();
+    };
+
+    const removeLineItem = function (id, category){
+        const index = indexFromId(id, category);
+        budgetData[category].splice(index, 1);
         redrawInterface();
     };
 
-    const indexFromId = (id) => parseInt(id.replace(EXPENSE_ID_PREFIX, ''));
+    const indexFromId = (id, category) => parseInt(id.replace(category + '_', ''));
 
-    const addExpense = function (data){
+    const addLineItem = function (category, data){
         if (data == null) {
             data = deepCopy(blankLineItem);
-            //TODO: temp, remove this (it was just for some visual variety while testing)
-            data['amount'] = (Math.floor(Math.random() * 9900) + 100) / 100;
         }
-        budgetData['expenses'].push(data);
+        budgetData[category].push(data);
         redrawInterface();
     };
 

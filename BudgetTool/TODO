@@ -1,15 +1,6 @@
-create the concept of an expense item
-    has name, frequency, expense amount
-
-save data includes income
-
 budgeter interface
-    income (monthly, hourly, biweekly, annual salary?)
-    add new expense
     area for how to divide up the remaining amount? (could have fun money, savings, investments, etc.)
         these could also just be included in the expenses itemization...
-    remaining total (positive or negative need to be super distinct with negative being a bold, bad red)
-    other statistics? since not all values will be monthly I could have a monthly breakdown...
+    other statistics?
 
-each expense line
-    name, frequency, amount, checkbox (include/uninclude - checked by default), delete/remove button
+

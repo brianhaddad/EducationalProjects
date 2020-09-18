@@ -8,7 +8,19 @@ async function loadState(filePickerId){
     }
     const fileTexts = await readFileArray(files);
     const allData = {};
-    fileTexts.map(n => JSON.parse(n['content'])).forEach(n => Object.assign(allData, n));
+    const datas = fileTexts.map(n => JSON.parse(n['content']));
+    for (let i = 0; i < datas.length; i++){
+        for (const n in datas[i]){
+            if (allData.hasOwnProperty(n)){
+                if (Array.isArray(allData[n])){
+                    allData[n] = allData[n].concat(datas[i][n]);
+                }
+            }
+            else {
+                allData[n] = datas[i][n];
+            }
+        }
+    }
     budgeter.setBudgetData(allData, fileTexts[0]['filename']);
 }
 

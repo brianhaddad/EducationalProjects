@@ -119,6 +119,10 @@ function isNumber(num) {
     return (num || num === 0) && !isNaN(num);
 }
 
+function dollarAmount(number){
+    return '$' + number.toFixed(2);
+}
+
 function getDateNow(){
     return new Date(Date.now());
 }

@@ -1,0 +1,64 @@
+body
+{
+    font-family: "Courier New", Courier, monospace;
+    width: 800px;
+    margin: 10px auto;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+.main
+{
+    font-family: "Arial", Arial, sans-serif;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.drop-spot
+{
+    display: block;
+    width: 62px;
+    height: 82px;
+    padding: 1px;
+    z-index: -1;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.card
+{
+    cursor: pointer;
+    display: block;
+    width: 56px;
+    height: 76px;
+    padding: 3px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.card.contents
+{
+    width: 50px;
+    height: 70px;
+    margin: auto;
+    border: none;
+    border-radius: 13px;
+}
+
+.card.contents.front
+{
+    color: #ffffff;
+    background-color: #172a80;
+}
+
+.card.contents.back
+{
+    color: #ffffff;
+    background-color: #eb5b19;
+}

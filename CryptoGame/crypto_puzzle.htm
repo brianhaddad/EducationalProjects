@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Crypto Puzzle</title>
+        <style>
+            .letter-input
+            {
+                width: 16px;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                border-bottom: 1px solid black;
+                text-align: center;
+            }
+            .letter-column
+            {
+                display: flex;
+                flex-wrap: nowrap;
+                flex-direction: column;
+                align-items: center;
+            }
+            .full-preview
+            {
+                font-family: 'Courier New', Courier, monospace;
+                font-weight: 2em;
+                width: 450px;
+                height: 150px;
+                resize: none;
+                border: none;
+                background-color: unset;
+                color: black;
+                padding: 8px;
+                font-size: 1.2em;
+            }
+            .bar-graph
+            {
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: flex-end;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            //This is the key driver for the entire operation. For a new puzzle, set a new cipherTextFormatted,
+            //with the proper punctuation and capitalization, and the code will do the rest.
+            const cipherTextFormatted = `Mvlf oippen lf elxnez myy fvyqm my kn fyewnr kz tqnainsdz gsgezflf, kim L hlee oyfm lm vnqn gszhgz. Zyi snwnq xsyh, hlmv fy jgsz islain hyqrf lm jlcvm kn dqgdxnr hlmvyim jidv mqyiken.`;
+            
+            //This is where the data is stored when saving. If you don't want to clash with other puzzles, make it unique.
+            const rulesKey = 'crypto_puzzle_2023_rules';
+
+            //Everything below this point is the "no tamper zone" unless you want to break everything (or improve it).
+            const rawAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const words = cipherTextFormatted.split(' ');
+            const wordDisplays = [];
+            const rules = {};
+
+            const storedRules = loadRules();
+            if (storedRules) {
+                for (const c in storedRules) {
+                    rules[c] = storedRules[c];
+                }
+            }
+
+            const appContainer = createElement('div', {'style': 'width:100%;height:100%;display:flex;flex-wrap:wrap;'}, null);
+            document.body.appendChild(appContainer);
+            
+            const puzzleDisplay = createElement('div', {'style': 'display:flex;flex-wrap:wrap;'}, null);
+            const puzzleHeader = createElement('h1', {}, 'Crypto Puzzle');
+            //TODO: need new text and graphic here.
+            const puzzleInstructions = createElement('details', {}, null);
+            const instructionsSummary = createElement('summary', {'style': 'cursor:pointer;user-select:none;'}, 'Instructions');
+            const instructionsContainer = createElement('div', {'style': 'display:flex;'}, null);
+            const instructionsImage = createElement('img', {'src': 'https://i.imgur.com/TAXm9JI.png', 'style': 'width:154px;height:454px;'}, null);
+            const instructionsDetailsContainer = createElement('div', {'style': 'width:250px;'}, null);
+            const instructionsDetailsBristles = createElement('p', {}, `It's me, hi, I'm the problem, it's me. That's right, you just can't get rid of me. I'm literally <em>everywhere</em>. Now I'm here to watch you suffer through this weird cryptography puzzle. I don't have a nose to pick, so I'll likely spend most of the time scoffing and judging you.`);
+            const instructionsDetailsSerious = createElement('p', {}, 'Click in a space above each encrypted letter to enter your guess for what "real" letter that letter might represent. Solve the puzzle by looking for patterns, words you know, and by paying attention to the frequency analysis! If the window closes before you are finished, don\'t worry! Your progress is auto-saved.');
+            const instructionsDetailsFinal = createElement('p', {}, 'Warning: this web page is a "dumb" puzzle. It will have no idea when you have solved the cipher. It\'s up to you to know when it is solved!');
+            instructionsDetailsContainer.appendChild(instructionsDetailsBristles);
+            instructionsDetailsContainer.appendChild(instructionsDetailsSerious);
+            instructionsDetailsContainer.appendChild(instructionsDetailsFinal);
+            instructionsContainer.appendChild(instructionsDetailsContainer);
+            instructionsContainer.appendChild(instructionsImage);
+            puzzleInstructions.appendChild(instructionsSummary);
+            puzzleInstructions.appendChild(instructionsContainer);
+            const puzzleHolder = createElement('div', {'style': 'width:600px;'}, null);
+            puzzleHolder.appendChild(puzzleHeader);
+            puzzleHolder.appendChild(puzzleInstructions);
+            puzzleHolder.appendChild(puzzleDisplay);
+            appContainer.appendChild(puzzleHolder);
+
+            //TODO: make the frequency display collapsible.
+            const frequencyDisplay = createFrequencyDisplay();
+            const frequencyDisplayContainer = createElement('div', {}, null);
+            frequencyDisplayContainer.appendChild(frequencyDisplay);
+            appContainer.appendChild(frequencyDisplayContainer);
+
+            const previewDisplay = createElement('div', {}, null);
+            const previewFieldset = makeFieldset('Preview');
+            const preview = createElement('textArea', {'class': 'full-preview', 'disabled': 'true'}, null);
+            previewFieldset.appendChild(preview);
+            previewDisplay.appendChild(previewFieldset);
+            appContainer.appendChild(previewDisplay);
+            
+            const controlsContainer = createElement('div', {}, null);
+            const controlsFieldset = makeFieldset('Controls');
+            const allControls = createElement('div', {}, null);
+            const resetButton = createElement('input', {'type': 'button', 'value': 'Reset'}, null);
+            resetButton.addEventListener('click', resetAll, false);
+            allControls.appendChild(resetButton);
+            controlsFieldset.appendChild(allControls);
+            controlsContainer.appendChild(controlsFieldset);
+            appContainer.appendChild(controlsContainer);
+
+            let i = 0;
+            for (let word of words) {
+                wordDisplays.push(new WordDisplay(word, i));
+                i++;
+            }
+
+            for (let wordDisplay of wordDisplays) {
+                puzzleDisplay.appendChild(wordDisplay.wordDisplayElement);
+            }
+
+            updatePuzzleDisplay();
+
+            function WordDisplay(cipherTextWord, wordIndex) {
+                const rawWord = cipherTextWord;
+                const index = wordIndex;
+                const displayString = cipherTextWord.toUpperCase();
+
+                this.wordDisplayElement = createWordDisplay(displayString, index);
+
+                this.update = () => {
+                    let i = 0;
+                    for (let char of displayString) {
+                        if (rawAlphabet.indexOf(char) > -1) {
+                            const id = makeId(displayString, index, i);
+                            const container = document.getElementById(id);
+                            if (rules.hasOwnProperty(char)) {
+                                container.value = rules[char];
+                            }
+                            else {
+                                container.value = '';
+                            }
+                            i++;
+                        }
+                    }
+                };
+            }
+
+            function saveRules() {
+                const storeMe = JSON.stringify(rules);
+                localStorage.setItem(rulesKey, storeMe);
+            }
+
+            function loadRules() {
+                const storedString = localStorage.getItem(rulesKey);
+                return JSON.parse(storedString);
+            }
+
+            function createWordDisplay(displayString, wordIndex) {
+                const displayChars = displayString.split('');
+                const container = createElement('div', {'style': 'margin:8px;display:flex;flex-wrap:nowrap;'}, null);
+                let i = 0;
+                for (let char of displayChars) {
+                    if (rawAlphabet.indexOf(char) > -1) {
+                        container.appendChild(createLetterDisplay(char, makeId(displayString, wordIndex, i)));
+                        i++;
+                    }
+                    else {
+                        container.appendChild(createSpecialCharacterDisplay(char));
+                    }
+                }
+                return container;
+            }
+
+            function createLetterDisplay(displayLetter, id) {
+                const container = createElement('div', { 'class': 'letter-column'}, null);
+                const inputDisplay = createElement('input', { 'type': 'text', 'id': id, 'maxlength': '1', 'class': 'letter-input' }, null);
+                inputDisplay.addEventListener(
+                    'keyup',
+                    function (event) { updateRuleFromInput(displayLetter, id, event); },
+                    false
+                );
+                const cryptoDisplay = createElement('div', {}, displayLetter);
+                container.appendChild(inputDisplay);
+                container.appendChild(cryptoDisplay);
+                return container;
+            }
+
+            function createSpecialCharacterDisplay(specialCharacter) {
+                const container = createElement('div', {'class': 'letter-column'}, null);
+                const inputDisplay = createElement('div', {}, specialCharacter);
+                const cryptoDisplay = createElement('div', {}, specialCharacter);
+                container.appendChild(inputDisplay);
+                container.appendChild(cryptoDisplay);
+                return container;
+            }
+
+            function updateRuleFromInput(cipherText, plainTextId, event) {
+                const ignoreThese = [
+                    'Tab',
+                    'Shift',
+                ];
+                if (ignoreThese.indexOf(event.key) > -1) {
+                    //Can ignore certain key presses.
+                    return;
+                }
+                const container = document.getElementById(plainTextId);
+                let plainText = container.value.toLowerCase();
+                if (plainText.length <= 1) {
+                    if (rawAlphabet.toLowerCase().indexOf(plainText) < 0) {
+                        //Not a letter:
+                        plainText = '';
+                    }
+                    if (!updateRules(cipherText, plainText)) {
+                        //Probably a duplicate rule:
+                        plainText = '';
+                    }
+                    container.value = plainText; //Correct capitalization or value type
+                    updatePuzzleDisplay();
+                }
+            }
+
+            function updateRules(cipherText, plainText) {
+                for (const c in rules) {
+                    if (c !== cipherText && rules[c] === plainText) {
+                        return false;
+                    }
+                }
+                if (plainText === '') {
+                    delete rules[cipherText];
+                }
+                else {
+                    rules[cipherText] = plainText;
+                }
+                saveRules();
+                return true;
+            }
+
+            function resetAll() {
+                for (var c in rules) {
+                    delete rules[c];
+                }
+                saveRules();
+                updatePuzzleDisplay();
+            }
+
+            function updatePuzzleDisplay() {
+                for (let wordDisplay of wordDisplays) {
+                    wordDisplay.update();
+                }
+                preview.value = createPreview();
+            }
+
+            function createPreview() {
+                let result = '';
+                for (let i = 0; i < cipherTextFormatted.length; i++) {
+                    const letter = cipherTextFormatted.substr(i, 1);
+                    if (rawAlphabet.indexOf(letter.toUpperCase()) < 0) {
+                        result += letter; //not a letter
+                    }
+                    else {
+                        const makeUpper = letter === letter.toUpperCase();
+                        let newLetter = letter.toUpperCase();
+                        for (const c in rules) {
+                            if (c === letter.toUpperCase() && rules[c].length === 1) {
+                                newLetter = makeUpper ? rules[c].toUpperCase() : rules[c];
+                            }
+                        }
+                        result += newLetter;
+                    }
+                }
+                return result;
+            }
+
+            function createFrequencyDisplay() {
+                const fieldset = makeFieldset('Letter Frequencies');
+                const container = createElement('div', {'class': 'bar-graph'}, null);
+
+                const counts = {};
+                let max = 0;
+                let min = cipherTextFormatted.length;
+                for (let i = 0; i < cipherTextFormatted.length; i++) {
+                    const char = cipherTextFormatted.substr(i, 1).toUpperCase();
+                    if (rawAlphabet.indexOf(char) > -1) {
+                        if (!counts.hasOwnProperty(char)) {
+                            counts[char] = 1;
+                        }
+                        else {
+                            counts[char]++;
+                        }
+                        if (counts[char] > max) {
+                            max = counts[char];
+                        }
+                        if (counts[char] < min) {
+                            min = counts[char];
+                        }
+                    }
+                }
+
+                const targetHeight = 300;
+                const letterHeight = 32;
+                const scale = targetHeight / max;
+                const orderedCounts = Object.entries(counts)
+                    .map(x => {return {'letter': x[0], 'count': x[1]}})
+                    .sort((a, b) => {
+                        if (a.count < b.count) {
+                            return 1;
+                        }
+                        if (a.count > b.count) {
+                            return -1;
+                        }
+                        return 0;
+                    });
+                for (const c of orderedCounts) {
+                    const count = c.count;
+                    const height = Math.floor(scale * count);
+                    let color = '#ff8888';
+                    if (count === max) {
+                        color = '#88cc88';
+                    }
+                    else if (count === min) {
+                        color = '#8888ff';
+                    }
+                    const bar = createElement('div', {'style': `display:flex;justify-content:flex-end;flex-direction:column;align-items:center;width:16px;height:${(height+letterHeight)}px;background-color:${color};padding:4px;margin:2px;border-radius:12px 12px 0px 0px`}, null);
+                    const letter = createElement('div', {}, c.letter);
+                    const countDisplay = createElement('div', {}, count);
+                    bar.appendChild(letter);
+                    bar.appendChild(countDisplay);
+                    container.appendChild(bar);
+                }
+
+                fieldset.appendChild(container);
+                return fieldset;
+            }
+
+            function makeFieldset(legendText) {
+                const fieldset = createElement('fieldset');
+                const legend = createElement('legend', {}, legendText);
+                fieldset.appendChild(legend);
+                return fieldset;
+            }
+
+            function createElement(type, attributes, innerHTML) {
+                const element = document.createElement(type);
+                for (const a in attributes) {
+                    element.setAttribute(a, attributes[a]);
+                }
+                if (innerHTML) {
+                    element.innerHTML = innerHTML;
+                }
+                return element;
+            }
+
+            function makeId(word, wordIndex, index) {
+                const separator = '-';
+                return word + separator + wordIndex + separator + index;
+            }
+
+        </script>
+    </body>
+</html>
